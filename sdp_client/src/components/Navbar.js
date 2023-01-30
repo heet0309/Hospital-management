@@ -44,9 +44,20 @@ const Navbar = () => {
                   location.pathname === "/" ? "active" : ""
                 }`}
                 aria-current="page"
-                to="/hospital"
+                to="/hospital/Login"
               >
                 Hospital
+              </Link>
+            </li>
+            <li className="nav-item">
+              <Link
+                className={`nav-link ${
+                  location.pathname === "/" ? "active" : ""
+                }`}
+                aria-current="page"
+                to="/admin/Home/"
+              >
+                Admin
               </Link>
             </li>
 

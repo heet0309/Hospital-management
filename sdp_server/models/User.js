@@ -11,14 +11,14 @@ const UserSchema = new Schema({
     required: true,
     unique: true,
   },
-  thumbnail: {
-    type: Object,
-    url: {
-      true: URL,
-    },
-    public_id: {
-      type: String,
-    },
+  phone: {
+    type: Number,
+    required: true,
+    unique: true,
+  },
+  isAdmin: {
+    type: Boolean,
+    default: false,
   },
   password: {
     type: String,

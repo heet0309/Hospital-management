@@ -13,7 +13,7 @@ app.use(express.json());
 
 //Available routes
 app.use("/api/auth", require("./routes/auth"));
-app.use("/api/notes", require("./routes/notes"));
+app.use("/api/hospital", require("./routes/hospital"));
 
 app.get("/", (req, res) => {
   res.send("Hello World!");
