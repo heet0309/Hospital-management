@@ -47,14 +47,14 @@ function App() {
             <Route exact path="/about">
               <About />
             </Route>
-            <Route exact path="/hospital">
-              <HospitalHome showAlert={showAlert} />
-            </Route>
             <Route exact path="/hospital/Signup">
               <HospitalSignup showAlert={showAlert} />
             </Route>
             <Route exact path="/hospital/Login">
               <LoginHospital showAlert={showAlert} />
+            </Route>
+            <Route exact path="/hospital/Home">
+              <HospitalHome showAlert={showAlert} />
             </Route>
             <Route exact path="/admin/Home">
               <AdminHome showAlert={showAlert} />

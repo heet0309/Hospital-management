@@ -6,7 +6,7 @@ const Navbar = () => {
 
   const handleLogout = () => {
     localStorage.removeItem("token");
-    history.push("/login");
+    history.push("/user/login");
   };
   return (
     <nav className="navbar navbar-expand-lg navbar-dark bg-dark">
@@ -49,7 +49,7 @@ const Navbar = () => {
                 Hospital
               </Link>
             </li>
-            <li className="nav-item">
+            {/* <li className="nav-item">
               <Link
                 className={`nav-link ${
                   location.pathname === "/" ? "active" : ""
@@ -59,7 +59,7 @@ const Navbar = () => {
               >
                 Admin
               </Link>
-            </li>
+            </li> */}
 
             {/* <li className="nav-item">
               <Link
@@ -75,10 +75,18 @@ const Navbar = () => {
           </ul>
           {!localStorage.getItem("token") ? (
             <div>
-              <Link className="btn btn-primary mx-2" to="/login" role="button">
+              <Link
+                className="btn btn-primary mx-2"
+                to="/user/login"
+                role="button"
+              >
                 Login
               </Link>
-              <Link className="btn btn-primary mx-2" to="/signup" role="button">
+              <Link
+                className="btn btn-primary mx-2"
+                to="/user/signup"
+                role="button"
+              >
                 Signup
               </Link>
             </div>
