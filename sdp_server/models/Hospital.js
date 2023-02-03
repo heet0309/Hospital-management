@@ -24,10 +24,10 @@ const HospitalSchema = new Schema({
     type: String,
     trim: true,
   },
-  doctor: {
+  doctorDetails: {
     type: [Object],
   },
-  bed: {
+  bedDetails: {
     type: [Object],
   },
   approved: {

@@ -186,4 +186,141 @@ router.delete("/deleteHospital/:id", async (req, res) => {
   }
 });
 
+//add hospitals
+router.put("/addHospitals", async (req, res) => {
+  try {
+    const { addHospital } = req.body;
+    if (!isValidObjectId(req.params.id)) {
+      return res.status(401).json({ error: "Invalid Request" });
+    }
+    let hospital = await Hospital.updateOne(
+      { _id: req.params.id },
+      { $push: { doctorDetails: addHospital } }
+    );
+    res.json({ hospital: hospital });
+  } catch (error) {
+    console.error(error.message);
+    res.status(500).send("Internal server Error\n" + error.message);
+  }
+});
+//delete hospital
+router.delete("/deleteHospital/:id", async (req, res) => {
+  try {
+    const prmId = res.params.id;
+    if (!isValidObjectId(prmId))
+      return res.status(401).json({ error: "Invalid Request" });
+
+    let hospital = await Hospital.findById(prmId);
+    if (!hospital) {
+      return res.status(404).send("Hospital is not found");
+    }
+    deleting = await Hospital.findByIdAndDelete(prmId);
+    res.json({ success: "Hospital has been deleted", hospital: hospital });
+  } catch (error) {
+    console.error(error.message);
+    return res.status(404).send("Member not found");
+  }
+});
+//get all hospital
+router.get("/findAllHospitalDetails", async (req, res) => {
+  try {
+    // const prmId = req.params.id;
+    // if (!isValidObjectId(prmId)) {
+    //   return res.status(401).json({ error: "Invalid Request" });
+    // }
+    let data = await Hospital.find({});
+    if (!data) {
+      return res.status(404).send("No Hospitals are not found");
+    }
+    res.json({ data: data });
+  } catch (error) {
+    console.error(error.message);
+    res.status(500).send("Internal Server Error");
+  }
+});
+//get hospitals
+router.get("/findHospitalDetails/:id", async (req, res) => {
+  try {
+    const prmId = req.params.id;
+    if (!isValidObjectId(prmId)) {
+      return res.status(401).json({ error: "Invalid Request" });
+    }
+    let data = await Hospital.findById(prmId);
+    if (!data) {
+      return res.status(404).send("Hospital not found");
+    }
+    res.json({ data: data });
+  } catch (error) {
+    console.error(error.message);
+    res.status(500).send("Internal Server Error");
+  }
+});
+
+//BED SYSTEM APIs
+//add bed
+router.put("/addBed/:id", async (req, res) => {
+  try {
+    const { addBed } = req.body;
+    if (!isValidObjectId(req.params.id)) {
+      return res.status(401).json({ error: "Invalid Request" });
+    }
+    let bed = await Hospital.updateOne(
+      { _id: req.params.id },
+      { $push: { bed: addBed } }
+    );
+    res.json({ bed: bed });
+  } catch (error) {
+    console.error(error.message);
+    res.status(500).send("Internal server Error\n" + error.message);
+  }
+});
+//get all bed
+router.get("/findAllBedDetails", async (req, res) => {
+  try {
+    let data = await Hospital.find({});
+    if (!data) {
+      return res.status(404).send("Hospital not found");
+    }
+    res.json({ data: data });
+  } catch (error) {
+    console.error(error.message);
+    res.status(500).send("Internal Server Error");
+  }
+});
+//get bed
+router.get("/findBedDetails/:id", async (req, res) => {
+  try {
+    const prmId = req.params.id;
+    if (!isValidObjectId(prmId)) {
+      return res.status(401).json({ error: "Invalid Request" });
+    }
+    let data = await Hospital.findById(prmId);
+    if (!data) {
+      return res.status(404).send("Hospital not found");
+    }
+    res.json({ data: data });
+  } catch (error) {
+    console.error(error.message);
+    res.status(500).send("Internal Server Error");
+  }
+});
+//delete bed
+router.delete("/deleteBed/:id", async (req, res) => {
+  try {
+    const prmId = res.params.id;
+    if (!isValidObjectId(prmId))
+      return res.status(401).json({ error: "Invalid Request" });
+
+    let bed = await Hospital.findById(prmId);
+    if (!bed) {
+      return res.status(404).send("bed is not found");
+    }
+    deleting = await Hospital.findByIdAndDelete(prmId);
+    res.json({ success: "bed has been deleted", bed: bed });
+  } catch (error) {
+    console.error(error.message);
+    return res.status(404).send("Member not found");
+  }
+});
+
 module.exports = router;
