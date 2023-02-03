@@ -24,6 +24,12 @@ const HospitalSchema = new Schema({
     type: String,
     trim: true,
   },
+  doctor: {
+    type: [Object],
+  },
+  bed: {
+    type: [Object],
+  },
   approved: {
     type: Boolean,
     default: false,
