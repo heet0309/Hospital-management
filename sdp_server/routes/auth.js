@@ -44,7 +44,7 @@ router.post(
       user = await User.create({
         name: req.body.name,
         email: req.body.email,
-        mobileNo: req.body.mobileNo,
+        phone: req.body.mobileNo,
         password: secPass,
       });
 
@@ -64,6 +64,38 @@ router.post(
     }
   }
 );
+
+router.put("/updateUser/:id", async (req, res) => {
+  let success = false;
+
+  const { name, email, mobileNo, isAdmin } = req.body;
+
+  // If there ate error then return the bad request and error
+  const errors = validationResult(req);
+  if (!errors.isEmpty()) {
+    return res.status(400).json({ success, errors: errors.array() });
+  }
+  try {
+    // check whether the user with same email exists already
+    let user = await User.findById(req.params.id);
+    if (!user) {
+      return res.status(400).json({
+        success,
+        errors: "User Not found",
+      });
+    }
+    user.name = name;
+    user.email = email;
+    user.phone = mobileNo;
+    user.isAdmin = isAdmin;
+
+    await user.save();
+    res.json({ user: user });
+  } catch (error) {
+    console.error(error.message);
+    res.status(500).send("Internal server error");
+  }
+});
 
 //ROUTE 2  : login a User using : POST "api/auth/login" , No login required
 router.post(
@@ -108,7 +140,7 @@ router.post(
 
       const authToken = jwt.sign(data, JWT_SECRET);
       success = true;
-      res.json({ success, authToken });
+      res.json({ success, data, authToken });
     } catch (error) {
       console.error(error.message);
       res.status(500).send("Internal server error");
@@ -117,11 +149,11 @@ router.post(
 );
 
 // ROUTE 3 : Get loggedin User Details using : POST "/api/auth/getuser" Login required
-router.post("/getuser", fetchuser, async (req, res) => {
+router.get("/getuser/:id", async (req, res) => {
   try {
-    let userId = req.user.id;
-    const user = await User.findById(userId).select("-password");
-    res.send(user);
+    let userId = req.params.id;
+    const user = await User.findById(userId);
+    res.send({ data: user });
   } catch (error) {
     console.error(error.message);
     res.status(500).send("Internal server error");
